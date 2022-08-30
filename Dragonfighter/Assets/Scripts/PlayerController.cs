@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject cameraObject;
     bool actionRunning = false;
     float translation, rotation;
-    //public GameObject attack_Point;
+
     float health = 100f;
     [SerializeField]
     //private Image healthStats;
@@ -72,14 +72,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            dragonAnimator.SetTrigger("Roar");
-            //SoundManager.Instance.PlaySound(3);
-            actionRunning = true;
-            StartCoroutine(WaitForAction(3f));
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            dragonAnimator.ResetTrigger("Roar");
+            dragonAnimator.SetTrigger("Jump");
         }
     }
     IEnumerator WaitForAction(float seconds)
@@ -88,38 +81,7 @@ public class PlayerController : MonoBehaviour
         actionRunning = false;
     }
 
-    private void OnTriggerEnter(Collider target)
-    {
-        if (target.CompareTag("Home"))
-        {
-            //SoundManager.Instance.PlaySound(1);
-            //GameManager.Instance.ShowGameMenuAtWin();
-            StartCoroutine(WinAnimation());
-        }
-    }
 
-    IEnumerator WinAnimation()
-    {
-        cameraObject.transform.SetParent(null);
-        gameObject.GetComponent<PlayerController>().enabled = false;
-        dragonAnimator.SetBool("Walk", false);
-        dragonAnimator.SetBool("Run", false);
-        yield return new WaitForSeconds(3);
-        dragonAnimator.SetTrigger("Roar");
-        //SoundManager.Instance.PlaySound(3);
-    }
-    //void Turn_On_AttackPoint()
-    //{
-    //    attack_Point.SetActive(true);
-    //}
-
-    //void Turn_Off_AttackPoint()
-    //{
-    //    if (attack_Point.activeInHierarchy)
-    //    {
-    //        attack_Point.SetActive(false);
-    //    }
-    //}
 
     public void ReduceHealth(float _damage)
     {
@@ -143,10 +105,7 @@ public class PlayerController : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         gameObject.transform.localRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 70f);
         gameObject.GetComponent<PlayerController>().enabled = false;
-        //SoundManager.Instance.StopAllSounds();
-        //GameManager.Instance.ShowGameMenuAtDeath();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 }
