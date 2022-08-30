@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject cameraObject;
     bool actionRunning = false;
     float translation, rotation;
-    public GameObject attack_Point;
+    //public GameObject attack_Point;
     float health = 100f;
     [SerializeField]
     //private Image healthStats;
@@ -108,18 +108,18 @@ public class PlayerController : MonoBehaviour
         dragonAnimator.SetTrigger("Roar");
         //SoundManager.Instance.PlaySound(3);
     }
-    void Turn_On_AttackPoint()
-    {
-        attack_Point.SetActive(true);
-    }
+    //void Turn_On_AttackPoint()
+    //{
+    //    attack_Point.SetActive(true);
+    //}
 
-    void Turn_Off_AttackPoint()
-    {
-        if (attack_Point.activeInHierarchy)
-        {
-            attack_Point.SetActive(false);
-        }
-    }
+    //void Turn_Off_AttackPoint()
+    //{
+    //    if (attack_Point.activeInHierarchy)
+    //    {
+    //        attack_Point.SetActive(false);
+    //    }
+    //}
 
     public void ReduceHealth(float _damage)
     {
