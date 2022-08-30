@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fire
   - Animal
+  - Ground
   layers:
   - Default
   - TransparentFX
