@@ -819,10 +819,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 156397083, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_Drag
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156397083, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_Mass
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 156397083, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 156397084, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
       propertyPath: CurrentItemText
       value: 
       objectReference: {fileID: 866751518}
+    - target: {fileID: 156397084, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: Prefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 131164, guid: 3c5f4e32698bdb04eaed647f60310510, type: 3}
+    - target: {fileID: 156397084, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: Prefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 163286, guid: 50daa816369323b42b56093bb108296f, type: 3}
+    - target: {fileID: 1571249163, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571249163, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.652
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571249163, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.947
+      objectReference: {fileID: 0}
     - target: {fileID: 4008776378200669744, guid: 538c0693dc8493248babdb05c9b1a636, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.744681

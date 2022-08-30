@@ -54,7 +54,10 @@ public class PlayerController : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().useGravity = true;
             transform.Translate(0, -0.01f, 0);
         }
-
+        if(!Input.anyKey)
+        {
+            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
     }
 
     private void OnCollisionEnter(Collision target)
