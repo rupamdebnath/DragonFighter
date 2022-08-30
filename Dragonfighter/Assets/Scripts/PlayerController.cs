@@ -59,18 +59,8 @@ public class PlayerController : MonoBehaviour
             dragonAnimator.SetBool("Walk", false);
             dragonAnimator.SetBool("Run", false);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            dragonAnimator.SetTrigger("Strike");
-            actionRunning = true;
-            StartCoroutine(WaitForAction(1.5f));
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            dragonAnimator.ResetTrigger("Strike");
 
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             dragonAnimator.SetTrigger("Jump");
         }

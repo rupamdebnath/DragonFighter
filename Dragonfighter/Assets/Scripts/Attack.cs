@@ -30,7 +30,7 @@ public class Attack : MonoBehaviour
     }
     private void UpdateEffect()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             StartCurrent();
         }
