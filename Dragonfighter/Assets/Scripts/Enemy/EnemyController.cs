@@ -29,8 +29,7 @@ public class EnemyController : MonoBehaviour
     public GameObject attack_Point;
 
     private float health = 100f;
-    [SerializeField]
-    GameObject tigerObject;
+
     //private EnemyAudio enemy_Audio;
 
     void Awake()

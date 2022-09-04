@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DigitalRuby.PyroParticles;
+using System.Threading;
 
 public class EnemyFire : MonoBehaviour
 {
@@ -24,25 +25,41 @@ public class EnemyFire : MonoBehaviour
     private float rotationX = 0F;
     private float rotationY = 0F;
     private Quaternion originalRotation;
+
+    public GameObject playerTarget;
+
+    private bool isFiring = false;
+
+    private Animator enemyAnimator;
+
+    private void Awake()
+    {
+        playerTarget = GameObject.FindWithTag("Player");
+        enemyAnimator = gameObject.GetComponent<Animator>();
+    }
     private void UpdateUI()
     {
         //CurrentItemText.text = Prefabs[currentPrefabIndex].name;
     }
     private void UpdateEffect()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Vector3.Distance(transform.position, playerTarget.transform.position) < 10f && Vector3.Distance(transform.position, playerTarget.transform.position) > 2f && !isFiring)
         {
+            transform.LookAt(playerTarget.transform.position);
+            enemyAnimator.SetTrigger("FireAttack");
             StartCurrent();
+            isFiring = true;
+            //StartCoroutine(WaitBeforeNext());
         }
-        else if (Input.GetKeyDown(KeyCode.Plus) || Input.GetKeyDown(KeyCode.KeypadPlus))
-        {
-            NextPrefab();
-        }
-        else if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
-        {
-            PreviousPrefab();
-        }
+
     }
+
+    //IEnumerator WaitBeforeNext()
+    //{
+    //    isFiring = false;
+    //    yield return new WaitForSeconds(2f);
+    //    UpdateEffect();
+    //}
 
     private void BeginEffect()
     {
@@ -131,11 +148,28 @@ public class EnemyFire : MonoBehaviour
     private void Start()
     {
         originalRotation = transform.localRotation;
-        UpdateUI();
+        //UpdateUI();
     }
 
     private void Update()
     {
         UpdateEffect();
+
+        //if (playerTarget.GetComponent<PlayerController>().CheckFlying() == true)
+        //{
+        //    enemyAnimator.SetBool("Fly", true);
+        //    transform.Translate(0, 2f, 0);
+        //    //this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        //    //while (playerTarget.transform.position.y != transform.position.y)
+        //    //{
+        //    //    transform.Translate(0, 0.05f, 0);
+        //    //}
+        //}
+        //else
+        //{
+        //    enemyAnimator.SetBool("Fly", false);
+        //    transform.Translate(0, 0f, 0);
+        //    enemyAnimator.SetBool("Walk", true);
+        //}
     }
 }

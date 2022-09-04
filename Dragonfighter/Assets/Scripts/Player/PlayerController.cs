@@ -161,4 +161,9 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
     }
+
+    public bool CheckFlying()
+    {
+        return isFlying;
+    }
 }
