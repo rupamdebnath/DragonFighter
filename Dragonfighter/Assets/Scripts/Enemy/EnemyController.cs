@@ -80,11 +80,12 @@ public class EnemyController : MonoBehaviour
         {
             Attack();
         }
+        Die();
     }
 
     void Patrol()
     {
-
+        enemy_Anim.SetBool("Walk", true);
         // tell nav agent that he can move
         navAgent.isStopped = false;
         navAgent.speed = walk_Speed;
@@ -197,21 +198,48 @@ public class EnemyController : MonoBehaviour
         if (attack_Timer > wait_Before_Attack)
         {
 
-            enemy_Anim.SetTrigger("HeadAttack");
-
-            attack_Timer = 0f;
-
+            StartCoroutine(AttackCoroutine());
         }
 
-        if (Vector3.Distance(transform.position, target.position) > attack_Distance + chase_After_Attack_Distance)
-        {
-
-            enemy_State = EnemyStates.CHASE;
-
-        }
 
 
     } // attack
+
+    IEnumerator AttackCoroutine()
+    {
+        enemy_Anim.SetTrigger("HeadAttack");
+
+        attack_Timer = 0f;
+        yield return new WaitForSeconds(2);
+        enemy_Anim.SetTrigger("TailAttack");
+        yield return new WaitForSeconds(3);
+        enemy_Anim.SetTrigger("HeadAttack");
+        if (Vector3.Distance(transform.position, target.position) > 1f)
+        {
+            // player run away from enemy
+
+            enemy_Anim.SetBool("Run", false);
+
+            enemy_State = EnemyStates.PATROL;
+
+            patrol_Timer = patrol_For_This_Time;
+
+            // reset the chase distance to previous
+            if (chase_Distance != current_Chase_Distance)
+            {
+                chase_Distance = current_Chase_Distance;
+            }
+
+        }
+    }
+
+    private void OnCollisionEnter(Collision _target)
+    {
+        if(_target.collider.gameObject.tag == "Player")
+        {
+            _target.gameObject.GetComponent<PlayerController>().ReduceHealth(20);
+        }
+    }
 
     void SetNewRandomDestination()
     {
@@ -259,10 +287,14 @@ public class EnemyController : MonoBehaviour
     }
     IEnumerator DeathAnime()
     {
-        enemy_Anim.SetBool("DeathAnime", true);
-
-        gameObject.GetComponent<EnemyController>().enabled = false;
-        yield return new WaitForSeconds(3f);
+        enemy_Anim.SetBool("Run", false);
+        enemy_Anim.SetBool("Walk", false);
+        enemy_Anim.SetTrigger("DeathAnime");
+        yield return new WaitForSeconds(2f);
+                
+        
         gameObject.SetActive(false);
+        gameObject.GetComponent<EnemyController>().enabled = false;
+        
     }
 }

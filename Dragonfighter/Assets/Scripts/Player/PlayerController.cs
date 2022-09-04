@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     float health = 100f;
     [SerializeField]
-    //private Image healthStats;
+    private Image healthStats;
     void Update()
     {
         if (actionRunning == false)
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Rotate(0, rotation, 0);
         AnimationInputControls();
-        //healthStats.fillAmount = health / 100;
+        healthStats.fillAmount = health / 100;
 
         if(Input.GetKey(KeyCode.F))
         {
@@ -42,22 +42,31 @@ public class PlayerController : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().useGravity = false;
             transform.Translate(0, 0.01f, 0);
         }
-        if (!Input.GetKey(KeyCode.F))
-        {
-            dragonAnimator.SetBool("Fly", false);
-            transform.Translate(0, 0, 0);
-        }
+        //if (!Input.GetKey(KeyCode.F))
+        //{
+        //    dragonAnimator.SetBool("Fly", false);
+        //    isFlying = true;
+        //    transform.Translate(0, 0, 0);
+        //}
         if (Input.GetKey(KeyCode.E))
         {
-            isFlying = true;
-            dragonAnimator.SetBool("Fly", false);
-            this.gameObject.GetComponent<Rigidbody>().useGravity = true;
             transform.Translate(0, -0.01f, 0);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f))
+            {
+                if(hit.collider.gameObject.tag == "Ground")
+                {
+                    isFlying = false;
+                    dragonAnimator.SetBool("Fly", false);
+                    this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                }
+            }
         }
         if(!Input.anyKey)
         {
             this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
+        Die();
     }
 
     private void OnCollisionEnter(Collision target)
@@ -102,11 +111,12 @@ public class PlayerController : MonoBehaviour
         {
             dragonAnimator.SetBool("FlyForward", true);
             dragonAnimator.SetBool("FlyBack", false);
-
+            dragonAnimator.SetBool("Fly", false);
         }
         else if (isFlying && !Input.GetKey(KeyCode.LeftShift))
         {
             dragonAnimator.SetBool("FlyForward", false);
+            dragonAnimator.SetBool("FlyBack", false);
         }
         if(isFlying && translation < 0)
         {
@@ -137,17 +147,18 @@ public class PlayerController : MonoBehaviour
     {
         if (health <= 0)
         {
-            //healthStats.fillAmount = health / 100;
+            healthStats.fillAmount = health / 100;
             StartCoroutine(DeathAnime());
         }
     }
     IEnumerator DeathAnime()
     {
         cameraObject.transform.SetParent(null);
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
-        gameObject.transform.localRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 70f);
+        dragonAnimator.SetTrigger("DeathAnime");
+        //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+        //gameObject.transform.localRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 70f);
         gameObject.GetComponent<PlayerController>().enabled = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
     }
 }

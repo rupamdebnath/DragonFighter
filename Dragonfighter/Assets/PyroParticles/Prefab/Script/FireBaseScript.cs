@@ -206,5 +206,10 @@ namespace DigitalRuby.PyroParticles
             get;
             private set;
         }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            Debug.Log(other);
+        }
     }
 }
